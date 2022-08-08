@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RxJava 2, Dagger 2, Moxy</string>
+    <string name="this_is_the_button">This is the Button</string>
+    <string name="button">Button</string>
+    <string name="button_1">Number 1</string>
+    <string name="button_2">Number 2</string>
+    <string name="button_3">Number 3</string>
 </resources>
