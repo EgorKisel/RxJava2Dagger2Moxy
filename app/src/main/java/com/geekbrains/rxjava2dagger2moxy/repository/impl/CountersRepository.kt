@@ -1,6 +1,6 @@
-package com.geekbrains.rxjava2dagger2moxy
+package com.geekbrains.rxjava2dagger2moxy.repository.impl
 
-class CountersModel {
+class CountersRepository {
     private val counters = mutableListOf(0, 0, 0)
 
     fun getCurrent(position: Int): Int {
