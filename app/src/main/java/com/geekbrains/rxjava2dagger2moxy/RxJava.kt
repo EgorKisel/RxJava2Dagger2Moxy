@@ -6,9 +6,9 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
-    //оператор distinct отсеивает дубликаты
+    //оператор distinctUntilChanged отсеивает дубликаты если они идут друг за другом
     Observable.fromIterable(data)
-        .distinct()
+        .distinctUntilChanged()
         .subscribe{
             println(it)
     }
