@@ -6,9 +6,11 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
-    //оператор distinctUntilChanged отсеивает дубликаты если они идут друг за другом
+    //оператор filter
     Observable.fromIterable(data)
-        .distinctUntilChanged()
+        .filter{
+            it > 34
+        }
         .subscribe{
             println(it)
     }
