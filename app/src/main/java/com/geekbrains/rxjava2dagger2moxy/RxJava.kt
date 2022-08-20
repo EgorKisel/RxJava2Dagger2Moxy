@@ -6,16 +6,10 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
-    Observable.fromCallable {
-        val result = old()
-        return@fromCallable result
-    }.subscribe{
+    Observable.fromIterable(data)
+        .take(3)
+        .subscribe{
         println(it)
     }
 
-}
-
-fun old(): List<Boolean> {
-    Thread.sleep(2000L)
-    return listOf(true, false, true)
 }
