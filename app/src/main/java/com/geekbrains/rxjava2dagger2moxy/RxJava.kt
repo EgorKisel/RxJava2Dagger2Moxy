@@ -7,6 +7,7 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
+    //от и до какого элемента использовать наш поток
     Observable.range(5, 8).subscribe {
         println(it)
     }
