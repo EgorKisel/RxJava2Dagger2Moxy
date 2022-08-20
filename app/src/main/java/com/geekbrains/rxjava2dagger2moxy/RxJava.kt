@@ -6,13 +6,20 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
-    //оператор filter
-    Observable.fromIterable(data)
-        .filter{
-            it > 34
-        }
-        .subscribe{
-            println(it)
-    }
+    val observableNames = Observable.just("Egor", "Vitaliy", "Galia")
+    val observableMail = Observable.just("Egor@mail.ru", "Vitaliy@yandex.ru", "Galia@gmail.com")
 
+    Observable.zip(observableNames, observableMail){ name, email ->
+        return@zip "$name: $email"
+    }.subscribe{
+        println(it)
+    }
+//
+//    Observable.fromIterable(data)
+//        .filter{
+//            it > 34
+//        }
+//        .subscribe{
+//            println(it)
+//    }
 }
