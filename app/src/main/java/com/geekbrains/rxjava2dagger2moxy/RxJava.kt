@@ -9,9 +9,10 @@ fun main(){
     val observableNames = Observable.just("Egor", "Vitaliy", "Galia")
     val observableMail = Observable.just("Egor@mail.ru", "Vitaliy@yandex.ru", "Galia@gmail.com")
 
-    Observable.zip(observableNames, observableMail){ name, email ->
-        return@zip "$name: $email"
-    }.subscribe{
+    //mergeWith - объединяет два потока
+    observableNames
+        .mergeWith(observableMail)
+        .subscribe{
         println(it)
     }
 //
