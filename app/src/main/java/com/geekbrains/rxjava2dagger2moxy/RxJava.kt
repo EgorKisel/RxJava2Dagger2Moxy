@@ -7,7 +7,7 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 fun main(){
 
     Observable.fromIterable(data)
-        .take(3)
+        .skip(3)
         .subscribe{
         println(it)
     }
