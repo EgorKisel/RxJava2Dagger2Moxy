@@ -6,10 +6,13 @@ private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90,
 
 fun main(){
 
+    //оператор map преобразует элементы цепочки согласно переданному ему правилу
     Observable.fromIterable(data)
-        .skip(3)
+        .map{
+            it + 2
+        }
         .subscribe{
-        println(it)
+            println(it)
     }
 
 }
