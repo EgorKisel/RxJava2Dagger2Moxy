@@ -13,6 +13,7 @@ import com.geekbrains.rxjava2dagger2moxy.repository.impl.GithubRepositoryImpl
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
@@ -25,6 +26,8 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
             return UserFragment()
         }
     }
+
+    private val bag = CompositeDisposable()
 
     private lateinit var viewBinding: FragmentUserListBinding
     private val adapter = UserAdapter()
@@ -74,12 +77,16 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
             .subscribe(
             {},
             {}
-        ).also { disposable = it }
+        ).disposeBy(bag)
+    }
+
+    private fun Disposable.disposeBy(bag: CompositeDisposable){
+        bag.add(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
+        bag.dispose()
     }
 
     private fun <T> Single<T>.subscribeByDefault(): Single<T>{

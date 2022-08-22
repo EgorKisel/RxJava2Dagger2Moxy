@@ -1,6 +1,8 @@
 package com.geekbrains.rxjava2dagger2moxy
 
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -49,4 +51,8 @@ fun main(){
 
 private fun getUserInfo(name: String): Observable<List<String>>{
     return Observable.just(listOf(name, "email.com"))
+}
+
+private fun Disposable.disposeBy(bag: CompositeDisposable){
+    bag.add(this)
 }
