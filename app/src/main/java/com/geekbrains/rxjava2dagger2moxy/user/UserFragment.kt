@@ -13,6 +13,7 @@ import com.geekbrains.rxjava2dagger2moxy.repository.impl.GithubRepositoryImpl
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -63,6 +64,8 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
 
     override fun onBackPressed() = presenter.onBackPressed()
 
+    var disposable: Disposable? = null
+
     private fun rxJava(){
         val observableNames = Observable.just("Egor", "Igor", "Stepan")
         Single.create<String>{
@@ -71,7 +74,12 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
             .subscribe(
             {},
             {}
-        )
+        ).also { disposable = it }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
     }
 
     private fun <T> Single<T>.subscribeByDefault(): Single<T>{
