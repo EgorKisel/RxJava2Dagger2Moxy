@@ -10,6 +10,10 @@ import com.geekbrains.rxjava2dagger2moxy.core.OnBackPressedListener
 import com.geekbrains.rxjava2dagger2moxy.databinding.FragmentUserListBinding
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 import com.geekbrains.rxjava2dagger2moxy.repository.impl.GithubRepositoryImpl
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -58,4 +62,21 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
     }
 
     override fun onBackPressed() = presenter.onBackPressed()
+
+    private fun rxJava(){
+        val observableNames = Observable.just("Egor", "Igor", "Stepan")
+        Single.create<String>{
+            it.onSuccess("Nu pogodiii")
+        }.subscribeByDefault()
+            .subscribe(
+            {},
+            {}
+        )
+    }
+
+    private fun <T> Single<T>.subscribeByDefault(): Single<T>{
+        return this
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }
