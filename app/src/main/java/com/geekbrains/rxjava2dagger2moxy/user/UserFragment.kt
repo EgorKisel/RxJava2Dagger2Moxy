@@ -1,6 +1,7 @@
 package com.geekbrains.rxjava2dagger2moxy.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,10 +49,10 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter.setOnUserClickListener(listener)
         with(viewBinding){
             rvGithubUsers.layoutManager = LinearLayoutManager(requireContext())
             rvGithubUsers.adapter = adapter
-            adapter.setOnUserClickListener(listener)
         }
     }
 
@@ -63,6 +64,18 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
 
     override fun initList(list: List<GithubUser>) {
         adapter.users = list
+    }
+
+    override fun showLoading() {
+        viewBinding.progressBarUsers.show()
+    }
+
+    override fun hideLoading() {
+        viewBinding.progressBarUsers.hide()
+    }
+
+    override fun showError(message: String?) {
+        Log.d("TAG", "message = $message")
     }
 
     override fun onBackPressed() = presenter.onBackPressed()

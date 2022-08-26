@@ -8,6 +8,7 @@ class UserPresenter(
     private val router: Router,
     private val user: GithubUser?
 ): MvpPresenter<UserNameView>() {
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.setUser(user?.login)
