@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.rxjava2dagger2moxy.GeekBrainsApp
+import com.geekbrains.rxjava2dagger2moxy.R
 import com.geekbrains.rxjava2dagger2moxy.core.OnBackPressedListener
 import com.geekbrains.rxjava2dagger2moxy.databinding.FragmentUserListBinding
+import com.geekbrains.rxjava2dagger2moxy.imageconverter.ImageConverterFragment
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 import com.geekbrains.rxjava2dagger2moxy.repository.impl.GithubRepositoryImpl
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -53,6 +55,9 @@ class UserFragment: MvpAppCompatFragment(), UserView, OnBackPressedListener{
         with(viewBinding){
             rvGithubUsers.layoutManager = LinearLayoutManager(requireContext())
             rvGithubUsers.adapter = adapter
+            btnGoToImgConverter.setOnClickListener { requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.containerMain, ImageConverterFragment()
+            ).addToBackStack("").commit() }
         }
     }
 
