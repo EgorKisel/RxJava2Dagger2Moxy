@@ -17,12 +17,8 @@ fun main(){
 }
 
 fun createHotObservable(): ConnectableObservable<Int> {
-    val testScheduler = TestScheduler(1, TimeUnit.MINUTES)
 
     return Observable.just(1, 12, 23, 34, 45)
         .map { it.also { println(it) } }
         .publish()
-        .also {
-            testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
-        }
 }
