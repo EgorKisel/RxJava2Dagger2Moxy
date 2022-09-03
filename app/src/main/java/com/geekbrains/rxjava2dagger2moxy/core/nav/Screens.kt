@@ -7,6 +7,7 @@ import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 import com.geekbrains.rxjava2dagger2moxy.user.UserFragment
 import com.geekbrains.rxjava2dagger2moxy.username.UserNameFragment
 import com.geekbrains.rxjava2dagger2moxy.username.UserNameFragment.Companion.KEY_USER
+import com.github.terrakok.cicerone.Screen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object UsersScreen: FragmentScreen{

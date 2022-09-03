@@ -1,6 +1,7 @@
 package com.geekbrains.rxjava2dagger2moxy.user
 
 import com.geekbrains.rxjava2dagger2moxy.core.nav.UserScreen
+import com.geekbrains.rxjava2dagger2moxy.imageconverter.ImageConverterFragment
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 import com.geekbrains.rxjava2dagger2moxy.repository.GithubRepository
 import com.github.terrakok.cicerone.Router
