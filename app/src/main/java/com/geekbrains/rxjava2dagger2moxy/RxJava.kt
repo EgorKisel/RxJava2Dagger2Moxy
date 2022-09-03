@@ -1,58 +1,33 @@
 package com.geekbrains.rxjava2dagger2moxy
 
+import android.util.Log
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-private val data = listOf<Int>(1, 2, 34, 685, 23, 53, 3, 2, 2, 45, 34, 1, 2, 90, 53)
 
 fun main(){
 
-    val observableNames = Observable.just("Egor", "Vitaliy", "Galia")
-    val observableMail = Observable.just("Egor@mail.ru", "Vitaliy@yandex.ru", "Galia@gmail.com")
-
-    observableNames
-        .flatMap { element ->
-            val delay = Random.nextInt(1000)
-            return@flatMap getUserInfo(element)
-                .delay(delay.toLong(), TimeUnit.MILLISECONDS)
-        }.subscribe{
-        println(it)
-    }
-//
-//    Observable.fromIterable(data)
-//        .filter{
-//            it > 34
-//        }
-//        .subscribe{
-//            println(it)
-//    }
-
-    Single.create<Int>{
-        it.onSuccess(1)
-    }
-
-    Maybe.create<Int>{
-        it.onSuccess(1)
-        it.onComplete()
-    }
-
-    Completable.create{
-        it.onComplete()
-    }
-
-    Flowable.create<Int>({
-        //it.onNext()
-        it.onComplete()
-    }, BackpressureStrategy.DROP)
+    saveCompletable("kisel1989@mail.ru")
+        .subscribe{
+            println("Complete")
+        }
 }
 
-private fun getUserInfo(name: String): Observable<List<String>>{
-    return Observable.just(listOf(name, "email.com"))
+private fun saveCompletable(email: String) = Completable.create { emitter ->
+    try {
+        saveToDb(email)
+        emitter.onComplete()
+    } catch (e: Exception){
+        Log.e("ERROR", e.message, e)
+        emitter.onError(e)
+    }
+
+}
+private fun saveToDb(email: String){
+    Thread.sleep(1000)
+    println("Saved $email")
 }
 
-private fun Disposable.disposeBy(bag: CompositeDisposable){
-    bag.add(this)
-}
