@@ -12,13 +12,29 @@ private val news = listOf("ВСУ взяли в плен россиян и ра�
 fun main(){
 
     saveCompletable("kisel1989@mail.ru")
-        .andThen(getNews())
+        .andThen(getMaybeService())
         .subscribe({
-            println("Single subscribe")
+            println("Maybe subscribe")
             println(it)
-        }, {
+        },{
             println(it.message)
+        }, {
+            println("Maybe complete")
         })
+}
+
+private fun getMaybeService() = Maybe.create<Boolean>{ emitter ->
+    try {
+        when(Random.nextInt(3)){
+            0 -> emitter.onSuccess(false)
+            1 -> emitter.onSuccess(true)
+            2 -> emitter.onComplete()
+        }
+    } catch (e: Exception){
+        emitter.onError(e)
+        Log.e("SERVICE_ERROR", e.message, e)
+    }
+
 }
 
 private fun getNews() = Single.create<List<String>>{ emitter ->
