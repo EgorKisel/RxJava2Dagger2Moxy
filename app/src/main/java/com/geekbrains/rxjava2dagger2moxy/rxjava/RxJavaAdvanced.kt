@@ -20,5 +20,5 @@ fun createHotObservable(): ConnectableObservable<Int> {
 
     return Observable.just(1, 12, 23, 34, 45)
         .map { it.also { println(it) } }
-        .publish()
+        .replay()
 }
