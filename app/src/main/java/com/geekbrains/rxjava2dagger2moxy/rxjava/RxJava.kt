@@ -1,10 +1,13 @@
 package com.geekbrains.rxjava2dagger2moxy
 
 import android.util.Log
-import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlin.random.Random
 
 private val news = listOf("ВСУ взяли в плен россиян и разбили технику врага", "Глава МАГАТЭ Гросси обеспокоился состоянием Запорожской АЭС")
@@ -62,5 +65,13 @@ private fun saveCompletable(email: String) = Completable.create { emitter ->
 private fun saveToDb(email: String){
     Thread.sleep(1000)
     println("Saved $email")
+}
+
+fun <T> Single<T>.subscribeByDefault(): Single<T> {
+    return this.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+fun Disposable.disposableBy(bag: CompositeDisposable) {
+    bag.add(this)
 }
 

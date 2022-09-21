@@ -1,7 +1,6 @@
 package com.geekbrains.rxjava2dagger2moxy.rxjava
 
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.observables.ConnectableObservable
 
 
 fun main(){
