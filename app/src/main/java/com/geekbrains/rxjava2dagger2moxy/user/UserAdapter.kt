@@ -1,22 +1,18 @@
 package com.geekbrains.rxjava2dagger2moxy.user
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.geekbrains.rxjava2dagger2moxy.R
+import com.geekbrains.rxjava2dagger2moxy.core.utils.loadImage
+import com.geekbrains.rxjava2dagger2moxy.databinding.ItemUserBinding
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 
-class UserAdapter() : RecyclerView.Adapter<GithubUserViewHolder>() {
+typealias OnUserClickListener = (login: String) -> Unit
 
-    private lateinit var userClick: ItemClickListener
-
-    fun setOnUserClickListener(listener: ItemClickListener) {
-        userClick = listener
-    }
+class UserAdapter(
+    private val onUserClickListener: OnUserClickListener
+) : RecyclerView.Adapter<GithubUserViewHolder>() {
 
     var users: List<GithubUser> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -26,8 +22,10 @@ class UserAdapter() : RecyclerView.Adapter<GithubUserViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GithubUserViewHolder {
-        return GithubUserViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_user, parent, false), userClick)
+        val binding = ItemUserBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return GithubUserViewHolder(binding, onUserClickListener)
     }
 
     override fun onBindViewHolder(holder: GithubUserViewHolder, position: Int) {
@@ -35,19 +33,18 @@ class UserAdapter() : RecyclerView.Adapter<GithubUserViewHolder>() {
     }
 
     override fun getItemCount() = users.size
-
 }
 
-class GithubUserViewHolder(itemView: View, private val userClick: ItemClickListener) :
-    RecyclerView.ViewHolder(itemView) {
+class GithubUserViewHolder(
+    private val binding: ItemUserBinding,
+    private val onUserClickListener: OnUserClickListener
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val tvLogin by lazy { itemView.findViewById<TextView>(R.id.tvUserLogin) }
-
-    fun bind(item: GithubUser) = with(item) {
-        tvLogin.text = item.login
-        itemView.setOnClickListener {
-            Log.d("TAG", "bind() called")
-            userClick.onUserClick(item)
+    fun bind(item: GithubUser) = with(binding) {
+        tvUserLogin.text = item.login
+        ivUserAvatar.loadImage(item.avatarUrl)
+        root.setOnClickListener {
+            onUserClickListener.invoke(item.login)
         }
     }
 }

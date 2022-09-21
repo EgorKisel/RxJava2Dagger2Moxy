@@ -1,8 +1,8 @@
 package com.geekbrains.rxjava2dagger2moxy.user
 
-import com.geekbrains.rxjava2dagger2moxy.core.nav.UserScreen
-import com.geekbrains.rxjava2dagger2moxy.imageconverter.ImageConverterFragment
-import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
+import com.geekbrains.rxjava2dagger2moxy.core.nav.RepoScreen
+import com.geekbrains.rxjava2dagger2moxy.core.nav.UsersDetailsScreen
+import com.geekbrains.rxjava2dagger2moxy.core.network.ReposDto
 import com.geekbrains.rxjava2dagger2moxy.repository.GithubRepository
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -31,7 +31,11 @@ class UserPresenter(private val repository: GithubRepository, private val router
         return true
     }
 
-    fun openUserScreen(user: GithubUser) {
-        router.navigateTo(UserScreen(user))
+    fun openRepoScreen(repo: ReposDto) {
+        router.navigateTo(RepoScreen(repo))
+    }
+
+    fun onItemClicked(login: String) {
+        router.navigateTo(UsersDetailsScreen(login))
     }
 }

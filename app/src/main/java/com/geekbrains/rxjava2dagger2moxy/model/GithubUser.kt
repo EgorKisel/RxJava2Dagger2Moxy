@@ -1,7 +1,19 @@
 package com.geekbrains.rxjava2dagger2moxy.model
 
 import android.os.Parcelable
+import com.geekbrains.rxjava2dagger2moxy.core.network.ReposDto
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class GithubUser(val login: String): Parcelable
+data class GithubUser(
+    val id: Long,
+    val login: String,
+    val avatarUrl: String?,
+    val reposUrl:String?
+    ): Parcelable
+
+@Parcelize
+data class GithubUserRepos(
+    val user: GithubUser,
+    val reposList: List<ReposDto>
+): Parcelable
