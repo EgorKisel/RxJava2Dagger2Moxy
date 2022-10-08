@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.rxjava2dagger2moxy.GeekBrainsApp
 import com.geekbrains.rxjava2dagger2moxy.R
 import com.geekbrains.rxjava2dagger2moxy.core.OnBackPressedListener
+import com.geekbrains.rxjava2dagger2moxy.core.database.AndroidNetworkStatus
 import com.geekbrains.rxjava2dagger2moxy.core.network.NetworkProvider
 import com.geekbrains.rxjava2dagger2moxy.core.utils.makeGone
 import com.geekbrains.rxjava2dagger2moxy.core.utils.makeVisible
@@ -34,7 +35,11 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
     private val presenter: UserPresenter by moxyPresenter {
         UserPresenter(
-            GithubRepositoryImpl(NetworkProvider.userApi),
+            GithubRepositoryImpl(
+                NetworkProvider.userApi,
+                GeekBrainsApp.instance.database.userDao(),
+                AndroidNetworkStatus(requireContext()).isOnlineSingle()
+            ),
             GeekBrainsApp.instance.router
         )
     }

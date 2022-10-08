@@ -5,10 +5,12 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.geekbrains.rxjava2dagger2moxy.R
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.function.BiPredicate
 
 fun ImageView.loadImage(url: String?){
     Glide.with(context)
@@ -33,5 +35,18 @@ fun View.makeVisible() {
 
 fun View.makeGone() {
     this.visibility = View.GONE
+}
+
+fun <T> Single<T>.doCompletableIf(
+    predicate: Boolean,
+    completableCreater: (data: T) -> Completable): Single<T>{
+    return if (predicate){
+        this.flatMap {
+            completableCreater(it).andThen(Single.just(it))
+        }
+    } else {
+        this
+    }
+
 }
 

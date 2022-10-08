@@ -1,4 +1,4 @@
-package com.geekbrains.rxjava2dagger2moxy
+package com.geekbrains.rxjava2dagger2moxy.rxjava
 
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -74,4 +74,5 @@ fun <T> Single<T>.subscribeByDefault(): Single<T> {
 fun Disposable.disposableBy(bag: CompositeDisposable) {
     bag.add(this)
 }
+
 
