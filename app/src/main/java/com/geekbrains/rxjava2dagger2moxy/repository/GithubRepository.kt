@@ -8,9 +8,5 @@ interface GithubRepository {
 
     fun getUsers(): Single<List<GithubUser>>
 
-    fun getUserById(login: String): Single<GithubUser>
-
-    fun getUserByLogin(login: String): Single<GithubUser>
-
-    fun getReposByLogin(login: String): Single<List<ReposDto>>
+    fun getUserWithReposByLogin(login: String): Single<GithubUser>
 }
