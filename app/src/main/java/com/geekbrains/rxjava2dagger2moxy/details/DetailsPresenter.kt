@@ -9,11 +9,15 @@ import com.geekbrains.rxjava2dagger2moxy.rxjava.subscribeByDefault
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class DetailsPresenter(
-    private val router: Router,
-    private val repository: GithubRepository
-) : MvpPresenter<UserDetailsView>() {
+class DetailsPresenter : MvpPresenter<UserDetailsView>() {
+
+    @Inject
+    lateinit var repository: GithubRepository
+    @Inject
+    lateinit var router: Router
+
 
     private val bag = CompositeDisposable()
     private var mLogin: String? = null

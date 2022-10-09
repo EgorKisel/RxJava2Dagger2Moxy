@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.rxjava2dagger2moxy.GeekBrainsApp
 import com.geekbrains.rxjava2dagger2moxy.R
 import com.geekbrains.rxjava2dagger2moxy.core.OnBackPressedListener
-import com.geekbrains.rxjava2dagger2moxy.core.database.AndroidNetworkStatus
-import com.geekbrains.rxjava2dagger2moxy.core.network.NetworkProvider
 import com.geekbrains.rxjava2dagger2moxy.core.utils.makeGone
 import com.geekbrains.rxjava2dagger2moxy.core.utils.makeVisible
 import com.geekbrains.rxjava2dagger2moxy.databinding.FragmentUserListBinding
 import com.geekbrains.rxjava2dagger2moxy.imageconverter.ImageConverterFragment
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
-import com.geekbrains.rxjava2dagger2moxy.repository.impl.GithubRepositoryImpl
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -34,14 +31,14 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
     }
 
     private val presenter: UserPresenter by moxyPresenter {
-        UserPresenter(
-            GithubRepositoryImpl(
-                NetworkProvider.userApi,
-                GeekBrainsApp.instance.database.userDao(),
-                AndroidNetworkStatus(requireContext()).isOnlineSingle()
-            ),
-            GeekBrainsApp.instance.router
-        )
+        UserPresenter().apply {
+            GeekBrainsApp.instance.appComponent.inject(this)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        GeekBrainsApp.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

@@ -4,9 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import com.geekbrains.rxjava2dagger2moxy.core.database.GithubAppDb
+import com.geekbrains.rxjava2dagger2moxy.core.di.AppComponent
+import com.geekbrains.rxjava2dagger2moxy.core.di.DaggerAppComponent
+import com.geekbrains.rxjava2dagger2moxy.core.di.modules.AppModule
 import com.geekbrains.rxjava2dagger2moxy.core.utils.ConnectivityListener
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
 
 class GeekBrainsApp : Application() {
 
@@ -14,13 +15,17 @@ class GeekBrainsApp : Application() {
         lateinit var instance: GeekBrainsApp
     }
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
+//    private val cicerone: Cicerone<Router> by lazy {
+//        Cicerone.create()
+//    }
+//
+//    val navigationHolder = cicerone.getNavigatorHolder()
+//    val router = cicerone.router
 
-    val navigationHolder = cicerone.getNavigatorHolder()
-    val router = cicerone.router
     private lateinit var connectivityListener: ConnectivityListener
+
+    lateinit var appComponent: AppComponent
+
     val database: GithubAppDb by lazy { GithubAppDb.create(this) }
 
     override fun onCreate() {
@@ -28,8 +33,12 @@ class GeekBrainsApp : Application() {
         instance = this
         connectivityListener = ConnectivityListener(
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 
-    fun getConnectObservable() = connectivityListener.status()
-    fun getConnectSingle() = connectivityListener.statusSingle()
+//    fun getConnectObservable() = connectivityListener.status()
+//    fun getConnectSingle() = connectivityListener.statusSingle()
 }
