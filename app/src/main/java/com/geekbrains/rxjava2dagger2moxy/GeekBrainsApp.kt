@@ -35,7 +35,7 @@ class GeekBrainsApp : Application() {
             applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
 
         appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
+            .appModule(AppModule(applicationContext))
             .build()
     }
 

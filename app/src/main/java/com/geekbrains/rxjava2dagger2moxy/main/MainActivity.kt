@@ -13,10 +13,9 @@ import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
-    private lateinit var binding: ActivityMainBinding
     private val navigator = AppNavigator(this, R.id.containerMain)
-    @Inject
-    lateinit var navigatorHolder: NavigatorHolder
+    private lateinit var binding: ActivityMainBinding
+    @Inject lateinit var navigatorHolder: NavigatorHolder
 
     private val presenter by moxyPresenter {
         MainPresenter().apply {
@@ -43,10 +42,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach { currentFragment ->
-            if (currentFragment is OnBackPressedListener && currentFragment.onBackPressed()){
+            if (currentFragment is OnBackPressedListener && currentFragment.onBackPressed()) {
                 return
             }
         }
         presenter.onBackPressed()
     }
+
 }
