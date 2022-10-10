@@ -43,7 +43,7 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsView, BackPressed
 
     private val presenter: DetailsPresenter by moxyPresenter {
         DetailsPresenter().apply {
-            GeekBrainsApp.instance.appComponent.inject(this@UserDetailsFragment)
+            GeekBrainsApp.instance.appComponent.inject(this)
         }
     }
 

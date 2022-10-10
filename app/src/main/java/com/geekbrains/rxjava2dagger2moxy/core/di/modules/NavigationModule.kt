@@ -8,7 +8,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object NavigationModule {
+class NavigationModule {
 
     var cicerone: Cicerone<Router> = Cicerone.create()
 

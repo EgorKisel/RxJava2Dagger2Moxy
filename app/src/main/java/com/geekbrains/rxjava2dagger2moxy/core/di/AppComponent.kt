@@ -7,6 +7,7 @@ import com.geekbrains.rxjava2dagger2moxy.main.MainActivity
 import com.geekbrains.rxjava2dagger2moxy.main.MainPresenter
 import com.geekbrains.rxjava2dagger2moxy.user.UserFragment
 import com.geekbrains.rxjava2dagger2moxy.user.UserPresenter
+import com.geekbrains.rxjava2dagger2moxy.userrepo.RepoUserPresenter
 import dagger.Component
 import javax.inject.Singleton
 

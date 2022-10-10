@@ -15,7 +15,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-object ApiModule {
+class ApiModule {
 
     @Named("baseUrl")
     @Provides

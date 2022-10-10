@@ -43,7 +43,6 @@ class RepoUserFragment: MvpAppCompatFragment(), RepoUserView, BackPressedListene
 
     override fun onBackPressed() = presenter.onBackPressed()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
