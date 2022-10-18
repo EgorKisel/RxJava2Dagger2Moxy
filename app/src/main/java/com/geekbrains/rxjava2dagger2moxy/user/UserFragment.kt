@@ -15,6 +15,7 @@ import com.geekbrains.rxjava2dagger2moxy.imageconverter.ImageConverterFragment
 import com.geekbrains.rxjava2dagger2moxy.model.GithubUser
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
@@ -30,11 +31,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
         presenter.onItemClicked(it)
     }
 
-    private val presenter: UserPresenter by moxyPresenter {
-        UserPresenter().apply {
-            GeekBrainsApp.instance.appComponent.inject(this)
-        }
-    }
+    @Inject lateinit var presenter : UserPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         GeekBrainsApp.instance.appComponent.inject(this)
