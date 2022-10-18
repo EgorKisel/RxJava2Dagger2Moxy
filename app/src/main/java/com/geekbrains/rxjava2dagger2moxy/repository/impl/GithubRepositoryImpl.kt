@@ -82,7 +82,7 @@ class GithubRepositoryImpl(
     }
 
     private fun getUserByLogin(login: String): Single<GithubUser> {
-        return usersApi.getUser(login).map(::mapToEntity).delay(500, TimeUnit.MILLISECONDS)
+        return usersApi.getUser(login).map(::mapToEntity).delay(200, TimeUnit.MILLISECONDS)
     }
 
     private fun getReposByLogin(login: String): Single<List<ReposDto>> {

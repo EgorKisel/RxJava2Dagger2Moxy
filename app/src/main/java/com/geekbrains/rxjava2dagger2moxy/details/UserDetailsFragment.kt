@@ -42,10 +42,14 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsView, BackPressed
     private var viewBinding: FragmentUserNameBinding? = null
 
     private val presenter: DetailsPresenter by moxyPresenter {
-        DetailsPresenter(GeekBrainsApp.instance.router,
-            GithubRepositoryImpl(NetworkProvider.userApi,
-                GeekBrainsApp.instance.database.userDao(),
-                AndroidNetworkStatus(requireContext()).isOnlineSingle()))
+        DetailsPresenter().apply {
+            GeekBrainsApp.instance.appComponent.inject(this)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        GeekBrainsApp.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

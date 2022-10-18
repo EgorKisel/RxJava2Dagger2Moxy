@@ -29,7 +29,7 @@ class ConverterJpgToPng(val currentContext: Context) {
             mim.compress(Bitmap.CompressFormat.PNG, 100, bos)
             bos.close()
             fos.close()
-            return Single.just(tempConvertedFile.toUri()).delay(3L, TimeUnit.SECONDS)
+            return Single.just(tempConvertedFile.toUri()).delay(200, TimeUnit.MILLISECONDS)
         }
         return Single.error(Throwable())
     }

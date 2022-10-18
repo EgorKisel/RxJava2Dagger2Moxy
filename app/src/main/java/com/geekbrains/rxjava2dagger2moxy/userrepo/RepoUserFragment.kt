@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.geekbrains.rxjava2dagger2moxy.GeekBrainsApp
 import com.geekbrains.rxjava2dagger2moxy.core.network.ReposDto
 import com.geekbrains.rxjava2dagger2moxy.databinding.FragmentUserRepoBinding
 import com.geekbrains.rxjava2dagger2moxy.view.BackPressedListener
+import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class RepoUserFragment: MvpAppCompatFragment(), RepoUserView, BackPressedListener {
 
+    @Inject
+    lateinit var router: Router
+
     private val presenter: RepoUserPresenter by moxyPresenter {
-        RepoUserPresenter(GeekBrainsApp.instance.router, arguments?.getParcelable(KEY_REPO))
+        RepoUserPresenter(router, arguments?.getParcelable(KEY_REPO))
     }
 
     private lateinit var binding: FragmentUserRepoBinding
@@ -38,7 +42,6 @@ class RepoUserFragment: MvpAppCompatFragment(), RepoUserView, BackPressedListene
     }
 
     override fun onBackPressed() = presenter.onBackPressed()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

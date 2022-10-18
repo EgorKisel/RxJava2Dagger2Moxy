@@ -9,10 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.geekbrains.rxjava2dagger2moxy.GeekBrainsApp
 import com.geekbrains.rxjava2dagger2moxy.databinding.FragmentImageConverterBinding
+import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class ImageConverterFragment : MvpAppCompatFragment(), ImageConverterView, BackButtonListener {
+
+    @Inject
+    lateinit var router: Router
 
     private var _vb: FragmentImageConverterBinding? = null
     private val vb get() = _vb!!
@@ -21,7 +26,7 @@ class ImageConverterFragment : MvpAppCompatFragment(), ImageConverterView, BackB
         ImageConverterPresenter(
             ConverterJpgToPng(requireContext()),
             MySchedulersFactory.create(),
-            GeekBrainsApp.instance.router
+            router
         )
     }
 
